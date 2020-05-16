@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'react-native-elements';
 import { View, Text } from 'react-native';
+import { connect } from 'react-redux'
 
 class Contactus extends Component {
 
