@@ -5,6 +5,8 @@ import Dishdetail from './DishDetailComponent';
 import Contactus from './ContactComponent';
 import About from './AboutComponent'
 import Reservation from './reservationComponent'
+import Favorites from './FavoriteComponsnt';
+import Login from './loginComponent';
 import { View, Platform, Image, StyleSheet, ScrollView, Text } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
 import { Icon } from 'react-native-elements';
@@ -76,6 +78,44 @@ const HomeNavigator = createStackNavigator({
     }
   }
 );
+
+const LoginNavigator = createStackNavigator({
+  Home: {
+    screen: Login,
+    navigationOptions: ({ navigation }) => ({
+      headerLeft: <Icon name="menu" size={24} color='white' onPress={() => navigation.toggleDrawer()} />
+    })
+  }
+},
+  {
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: "#512DA8"
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        color: "#fff"
+      }
+    }
+  }
+);
+
+const FavoritesNavigator = createStackNavigator({
+  Favorites: { screen: Favorites }
+}, {
+  navigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: "#512DA8"
+    },
+    headerTitleStyle: {
+      color: "#fff"
+    },
+    headerTintColor: "#fff",
+    headerLeft: <Icon name="menu" size={24}
+      iconStyle={{ color: 'white' }}
+      onPress={() => navigation.navigate('DrawerToggle')} />
+  })
+})
 
 const ContactNavigator = createStackNavigator({
   Contactus: {
@@ -152,6 +192,16 @@ const ReservationNavigator = createStackNavigator({
   })
 })
 const MainNavigator = createDrawerNavigator({
+  Login: {
+    screen: LoginNavigator,
+    navigationOptions: {
+      title: 'Login',
+      drawerLable: 'Login',
+      drawerIcon: ({ tintColor }) => (
+        <Icon name='sign-in' type='font-awesome' size={24} color={tintColor} />
+      )
+    }
+  },
   Home: {
     screen: HomeNavigator,
     navigationOptions: {
@@ -202,11 +252,31 @@ const MainNavigator = createDrawerNavigator({
         />
       ),
     }
+  },
+  Favorites:
+  {
+    screen: FavoritesNavigator,
+    navigationOptions: {
+      title: 'My Favorites',
+      drawerLabel: 'My Favorites',
+      drawerIcon: ({ tintColor, focused }) => (
+        <Icon
+          name='heart'
+          type='font-awesome'
+          size={24}
+          iconStyle={{ color: tintColor }}
+        />
+      ),
+    }
   }
-}, {
-  drawerBackgroundColor: '#D1C4E9',
-  contentComponent: CustomDrawerContentComponent
-})
+
+},
+
+  {
+    initialRouteName: 'Home',
+    drawerBackgroundColor: '#D1C4E9',
+    contentComponent: CustomDrawerContentComponent
+  })
 
 class Main extends Component {
   componentDidMount() {
